@@ -53,11 +53,7 @@ class PokemonGoBot(object):
         self._setup_logging()
         self._setup_api()
         self._setup_workers()
-
-        if self.config.navigator_type == 'spiral':
-            self.navigator=cell_workers.FollowSpiral(self)
-        elif self.config.navigator_type == 'path':
-            self.navigator=cell_workers.FollowPath(self)
+        self._setup_navigator()
 
         random.seed()
 
@@ -310,6 +306,14 @@ class PokemonGoBot(object):
             cell_workers.CatchLuredPokemon(self),
             cell_workers.SpinFort(self)
         ]
+
+    def _setup_navigator(self): 
+        if self.config.navigator_type == 'spiral':
+            self.navigator=cell_workers.FollowSpiral(self)
+        elif self.config.navigator_type == 'path':
+            self.navigator=cell_workers.FollowPath(self)
+        elif self.config.navigator_type == 'rspiral':
+            self.navigator=cell_workers.FollowRoundSpiral(self)
 
     def _print_character_info(self):
         # get player profile call
