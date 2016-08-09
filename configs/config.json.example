@@ -18,30 +18,33 @@
         }
       },
       {
-        "type": "TransferPokemon"
+        "type": "TransferPokemon",
+        "config": {
+          "every_nth_tick": 10
+        }
       },
       {
         "type": "EvolvePokemon",
         "config": {
-            "evolve_all": "none",
-            "first_evolve_by": "cp",
-            "evolve_above_cp": 500,
-            "evolve_above_iv": 0.8,
-            "logic": "or",
-            "evolve_speed": 20,
-            "use_lucky_egg": false
+          "evolve_all": "Pidgey,Caterpie,Weedle,Rattata,Zubat,Doduo,Venonat,Goldeen,Psyduck,Krabby,Cubone,Drowzee,Koffing,",
+          "evolve_cp_min": 0,
+          "use_lucky_egg": false
         }
       },
       {
         "type": "RecycleItems",
         "config": {
           "item_filter": {
-            "Pokeball":       { "keep" : 100 },
+            "Pokeball":       { "keep" : 25 },
+            "Greatball":      { "keep" : 50 },
+            "Ultraball":      { "keep" : 75 },
             "Potion":         { "keep" : 10 },
             "Super Potion":   { "keep" : 20 },
             "Hyper Potion":   { "keep" : 30 },
+            "Max Potion":     { "keep" : 100 },
             "Revive":         { "keep" : 30 },
-            "Razz Berry":     { "keep" : 100 }
+            "Max Revive":     { "keep" : 30 },
+            "Razz Berry":     { "keep" : 50 }
           }
         }
       },
@@ -52,10 +55,7 @@
         "type": "CatchLuredPokemon"
       },
       {
-        "type": "SpinFort",
-        "config": {
-          "spin_when_necessary": True
-        }
+        "type": "SpinFort"
       },
       {
         "type": "MoveToFort",
@@ -63,23 +63,16 @@
             "lure_attraction": true,
             "lure_max_distance": 2000
         }
-      },
-      {
-        "type": "FollowSpiral",
-        "config": {
-          "diameter": 4,
-          "step_size": 70
-        }
       }
     ],
-    "desired_catch_rate": 0.50,
     "map_object_cache_time": 5,
     "forts": {
-      "avoid_circles": true,
-      "max_circle_size": 50
+      "avoid_circles": false
     },
+    "log_timing_info": true,
     "websocket_server": false,
-    "walk": 40,
+    "walk": 40.0,
+    "minimum_tick_time": 2.0,
     "action_wait_min": 1,
     "action_wait_max": 1,
     "debug": false,
@@ -88,29 +81,39 @@
     "location_cache": true,
     "distance_unit": "km",
     "reconnecting_timeout": 15,
-    "evolve_captured": "NONE",
     "catch_randomize_reticle_factor": 1.0,
     "catch_randomize_spin_factor": 1.0,
+    "evolve_captured": "Pidgey,Caterpie,Weedle,Rattata,Zubat,Doduo,Venonat,Goldeen,Psyduck,Krabby,Cubone,Drowzee,Koffing,",
     "catch": {
       "any": {"catch_above_cp": 0, "catch_above_iv": 0, "logic": "or"},
       "// Example of always catching Rattata:": {},
       "// Rattata": { "always_catch" : true }
     },
     "release": {
-      "any": {"release_below_cp": 0, "release_below_iv": 0, "logic": "or"},
-      "// Example of always releasing Rattata:": {},
-      "// Rattata": {"always_release": true},
-      "// Example of keeping 3 stronger (based on CP) Pidgey:": {},
-      "// Pidgey": {"keep_best_cp": 3},
-      "// Example of keeping 2 stronger (based on IV) Zubat:": {},
-      "// Zubat": {"keep_best_iv": 2},
-      "// Also, it is working with any": {},
-      "// any": {"keep_best_iv": 3},
-      "// Example of keeping the 2 strongest (based on CP) and 3 best (based on IV) Zubat:": {},
-      "// Zubat": {"keep_best_cp": 2, "keep_best_iv": 3}
+      "any": {"keep_best_cp": 1, "keep_best_iv": 1},
+      "Pinsir": {"keep_best_cp": 1},
+      "Tauros": {"keep_best_cp": 1},
+      "Tangela": {"keep_best_cp": 1},
+      "Scyther": {"keep_best_cp": 1},
+      "Tentacruel": {"keep_best_cp": 1},
+      
+      "Lapras": {"keep_best_cp": 3},
+      "Moltres": {"keep_best_cp": 3},
+      "Zapdos": {"keep_best_cp": 3},
+      "Articuno": {"keep_best_cp": 3},
+      "Mewtwo": {"keep_best_cp": 3},
+      "Dragonite": {"keep_best_cp": 3},
+      "Snorlax": {"keep_best_cp": 3},
+      "Mew": {"keep_best_cp": 3},
+      "Arcanine": {"keep_best_cp": 3},
+      "Vaporeon": {"keep_best_cp": 3},
+      "Gyarados": {"keep_best_cp": 3},
+      "Exeggutor": {"keep_best_cp": 3},
+      "Muk": {"keep_best_cp": 3},
+      "Weezing": {"keep_best_cp": 3},
+      "Flareon": {"keep_best_cp": 3}
     },
     "vips" : {
-         "Any pokemon put here directly force to use Berry & Best Ball to capture, to secure the capture rate!": {},
         "any": {"catch_above_cp": 1200, "catch_above_iv": 0.9, "logic": "or" },
         "Lapras": {},
         "Moltres": {},
@@ -130,12 +133,10 @@
         "Muk": {},
         "Weezing": {},
         "Flareon": {},
-        "Charmander": {},
 
-        "Machop": {},
-        "Machamp": {},
-        "Kabutops": {},
-        "Dratini": {}
+        "Gastly": {},
+        "Haunter": {},
+        "Gengar": {}
 
     }
 }
