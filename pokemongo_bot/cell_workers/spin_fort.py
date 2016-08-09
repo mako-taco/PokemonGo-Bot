@@ -116,7 +116,6 @@ class SpinFort(BaseTask):
                 )
             if 'chain_hack_sequence_number' in response_dict['responses'][
                     'FORT_SEARCH']:
-                time.sleep(2)
                 return response_dict['responses']['FORT_SEARCH'][
                     'chain_hack_sequence_number']
             else:
@@ -133,7 +132,6 @@ class SpinFort(BaseTask):
                 else:
                     self.bot.fort_timeouts[fort["id"]] = (time.time() + 300) * 1000  # Don't spin for 5m
                 return 11
-        sleep(2)
         return 0
 
     def get_fort_in_range(self):

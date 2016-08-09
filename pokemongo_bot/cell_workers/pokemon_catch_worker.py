@@ -21,6 +21,8 @@ class PokemonCatchWorker(BaseTask):
         self.spawn_point_guid = ''
         self.response_key = ''
         self.response_status_key = ''
+        self.desired_catch_rate = self.config.desired_catch_rate
+
 
     def work(self, response_dict=None):
         encounter_id = self.pokemon['encounter_id']
@@ -75,7 +77,6 @@ class PokemonCatchWorker(BaseTask):
 
                                 pokemon_data['name'] = pokemon_name
                                 # Simulate app
-                                sleep(3)
 
                         if not self.should_capture_pokemon(pokemon_name, cp, pokemon_potential, response_dict):
                             return False
@@ -217,12 +218,12 @@ class PokemonCatchWorker(BaseTask):
                                     current_type = pokeball
                                     while current_type < 2:
                                         current_type += 1
-                                        if catch_rate[pokeball-1] < 0.35 and items_stock[current_type] > 0:
-                                            # if current ball chance to catch is under 35%, and player has better ball - then use it
+                                        if catch_rate[pokeball-1] < self.desired_catch_rate and items_stock[current_type] > 0:
+                                            # if current ball chance to catch is under desired catch rate, and player has better ball - then use it
                                             pokeball = current_type # use better ball
 
                                 #if the rate is still low and we didn't throw a berry before use berry
-                                if catch_rate[pokeball-1] < 0.35 and berries_count > 0 and berry_used == False:
+                                if catch_rate[pokeball-1] < self.desired_catch_rate and berries_count > 0 and berry_used == False:
                                     # If it's not the VIP type, we don't want to waste our ultra ball if no balls left.
                                     if items_stock[1] == 0 and items_stock[2] == 0:
                                         break
@@ -277,7 +278,7 @@ class PokemonCatchWorker(BaseTask):
                                 current_type=pokeball
                                 while current_type < 2:
                                     current_type += 1
-                                    if catch_rate[pokeball-1] < 0.35 and items_stock[current_type] > 0:
+                                    if catch_rate[pokeball-1] < self.desired_catch_rate and items_stock[current_type] > 0:
                                         pokeball = current_type # use better ball
 
                                 # This is to avoid rare case that a berry has ben throwed <0.42
@@ -328,7 +329,6 @@ class PokemonCatchWorker(BaseTask):
                                         formatted="{pokemon} fled.",
                                         data={'pokemon': pokemon_name}
                                     )
-                                    sleep(2)
                                     continue
                                 if status is 3:
                                     self.emit_event(
@@ -380,7 +380,6 @@ class PokemonCatchWorker(BaseTask):
                                                 data={'pokemon': pokemon_name}
                                             )
                             break
-        time.sleep(5)
 
     def count_pokemon_inventory(self):
         # don't use cached bot.get_inventory() here

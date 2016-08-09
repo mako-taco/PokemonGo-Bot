@@ -7,7 +7,13 @@ from pokemongo_bot.base_task import BaseTask
 class TransferPokemon(BaseTask):
     SUPPORTED_TASK_API_VERSION = 1
 
+    def initialize(self):
+        self.every_nth_tick = self.config.get('every_nth_tick', 10)
+        
     def work(self):
+        if not self._should_run():
+            return
+
         pokemon_groups = self._release_pokemon_get_groups()
         for pokemon_id in pokemon_groups:
             group = pokemon_groups[pokemon_id]
@@ -198,6 +204,9 @@ class TransferPokemon(BaseTask):
             }
         )
         action_delay(self.bot.config.action_wait_min, self.bot.config.action_wait_max)
+
+    def _should_run(self):
+        return self.bot.tick_count % self.every_nth_tick == 0
 
     def _get_release_config_for(self, pokemon):
         release_config = self.bot.config.release.get(pokemon)

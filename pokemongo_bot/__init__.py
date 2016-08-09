@@ -401,9 +401,13 @@ class PokemonGoBot(object):
         # Check if session token has expired
         self.check_session(self.position[0:2])
 
+        start_time = time.time()
         for worker in self.workers:
             if worker.work() == WorkerResult.RUNNING:
-                return
+                break
+
+        sleep_time = 2 - (time.time() - start_time)
+        time.sleep(max(0, sleep_time))
 
     def get_meta_cell(self):
         location = self.position[0:2]

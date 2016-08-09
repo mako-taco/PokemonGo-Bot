@@ -265,6 +265,13 @@ def init_config():
     add_config(
         parser,
         load,
+        long_flag="--desired_catch_rate",
+        type=float,
+        default=0.35
+    )
+    add_config(
+        parser,
+        load,
         short_flag="-k",
         long_flag="--gmapkey",
         help="Set Google Maps API KEY",

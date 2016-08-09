@@ -56,10 +56,5 @@ class StepWalker(object):
         self.api.set_position(cLat, cLng, 0)
         self.bot.heartbeat()
 
-        sleep(1)  # sleep one second plus a random delta
-        # self._work_at_position(
-        #     self.initLat, self.initLng,
-        #     alt, False)
-
     def _pythagorean(self, lat, lng):
         return sqrt((lat ** 2) + (lng ** 2))

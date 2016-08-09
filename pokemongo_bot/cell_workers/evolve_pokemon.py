@@ -45,6 +45,9 @@ class EvolvePokemon(BaseTask):
         if not self.evolve_all or self.evolve_all[0] == 'none':
             return False
 
+        if self.bot.tick_count is not 1:
+            return False
+
         # Evolve all is used - Use Lucky egg only at the first tick
         if self.bot.tick_count is not 1 or not self.use_lucky_egg:
             return True
